@@ -3,8 +3,6 @@ package com.example.analysiswordbyfasttextmobile
 import net.sf.javaml.core.DenseInstance
 import net.sf.javaml.distance.CosineSimilarity
 import java.io.BufferedReader
-import java.io.File
-import java.io.FileReader
 
 /**
  * 素性ベクトルの計算を行うクラス
@@ -59,9 +57,9 @@ class Calculator {
     fun getWord2Vec(
         inputWord: LinkedHashMap<String, String>,
         joinedWord: String,
-        calculatedVector: LinkedHashMap<String, ArrayList<Double>>
+        calculatedVector: LinkedHashMap<String, ArrayList<Double>>,
+        cosBr: BufferedReader
     ): LinkedHashMap<String, Double> {
-        val cosBr = BufferedReader(FileReader(File(Setting.model)))
         var cosRank = LinkedHashMap<String, Double>()
         var cosStr = cosBr.readLine()
         cosStr = cosBr.readLine()
