@@ -1,7 +1,13 @@
 package com.example.analysiswordbyfasttextmobile
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.TextInputEditText
+import android.util.Log
+import android.view.View
+import android.widget.EditText
+import kotlinx.android.synthetic.main.activity_main.view.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -22,22 +28,28 @@ class MainActivity : AppCompatActivity() {
             Setting.vectorSize = 200
         }
 
-        // 入力する単語情報をセット
-        val inputWord = linkedMapOf<String, String>()
-        inputWord.put("感情", "Negative")
-        inputWord.put("人間", "Positive")
+        val executeButton = findViewById<View>(R.id.executeButton)
+        executeButton.setOnClickListener {
+            val inputText1 = findViewById<View>(R.id.inputText1) as EditText
+            Log.d("checked", "${inputText1.text}")
+        }
 
-        // 素性ベクトルファイルの読み込み
-        val searchBr = BufferedReader(InputStreamReader(assets.open(Setting.model)))
-        val cosBr = BufferedReader(InputStreamReader(assets.open(Setting.model)))
-
-        // 入力した単語の素性ベクトル情報をサーチ
-        val vectorMap = Parser().searchInputWordVector(inputWord, searchBr)
-        // 単語ベクトルの演算
-        val (calculatedVector, joinedWord) = cal.calWordVector(inputWord, vectorMap)
-        // 入力した単語と他の単語のコサイン類似度を計算
-        val cosRank = cal.getWord2Vec(inputWord, joinedWord, calculatedVector, cosBr)
-        // コサイン類似度の上位10位まで出力
-        Sort().sortCosRank(cosRank)
+//        // 入力する単語情報をセット
+//        val inputWord = linkedMapOf<String, String>()
+//        inputWord.put("感情", "Negative")
+//        inputWord.put("人間", "Positive")
+//
+//        // 素性ベクトルファイルの読み込み
+//        val searchBr = BufferedReader(InputStreamReader(assets.open(Setting.model)))
+//        val cosBr = BufferedReader(InputStreamReader(assets.open(Setting.model)))
+//
+//        // 入力した単語の素性ベクトル情報をサーチ
+//        val vectorMap = Parser().searchInputWordVector(inputWord, searchBr)
+//        // 単語ベクトルの演算
+//        val (calculatedVector, joinedWord) = cal.calWordVector(inputWord, vectorMap)
+//        // 入力した単語と他の単語のコサイン類似度を計算
+//        val cosRank = cal.getWord2Vec(inputWord, joinedWord, calculatedVector, cosBr)
+//        // コサイン類似度の上位10位まで出力
+//        Sort().sortCosRank(cosRank)
     }
 }
