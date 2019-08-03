@@ -1,18 +1,19 @@
 package com.example.analysiswordbyfasttextmobile
 
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.TextInputEditText
 import android.util.Log
 import android.view.View
 import android.widget.EditText
-import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_main.view.*
+import android.widget.TableLayout
+import android.widget.TableRow
+import kotlinx.android.synthetic.main.table_row.view.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
 class MainActivity : AppCompatActivity() {
+    //TODO: PNを画面から指定できるようにする
+    //TODO: モード選択を画面からできるようにする
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,17 +51,26 @@ class MainActivity : AppCompatActivity() {
             // 入力した単語と他の単語のコサイン類似度を計算
             val cosRank = cal.getWord2Vec(inputWord, joinedWord, calculatedVector, cosBr)
             // コサイン類似度の上位10位まで出力
-//            Sort().sortCosRank(cosRank)
-            val sortedAnswer = cosRank.toList().sortedByDescending { it.second }.toMap()
-            val rank1 = findViewById<View>(R.id.textView1) as TextView
-            var i = 0
-            for (ans in sortedAnswer) {
-                i = i.plus(1)
-                println("${i}位：${ans}")
-                rank1.text = ans.toString()
-                if (i > 9) {
-                    break
-                }
+            sortCosRank(cosRank)
+        }
+    }
+    fun sortCosRank(cosRank: LinkedHashMap<String, Double>): Unit {
+        val sortedAnswer = cosRank.toList().sortedByDescending { it.second }.toMap()
+        val tableLayout = findViewById<View>(R.id.tableLayout) as TableLayout
+        var i = 0
+        for (ans in sortedAnswer) {
+            val tableRow = layoutInflater.inflate(R.layout.table_row, null) as TableRow
+            // 順位をセット
+            tableRow.getVirtualChildAt(0).rowtext1.text = "${i + 1}位"
+            tableRow.getVirtualChildAt(0).rowtext1.height = 100
+            // 演算結果をセット
+            tableRow.getVirtualChildAt(1).rowtext2.text = "${ans}"
+            tableRow.getVirtualChildAt(1).rowtext2.height = 100
+            i = i.plus(1)
+            println("${i}位：${ans}")
+            tableLayout.addView(tableRow)
+            if (i > 9) {
+                break
             }
         }
     }
