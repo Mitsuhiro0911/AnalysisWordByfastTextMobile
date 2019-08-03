@@ -14,6 +14,8 @@ import java.io.InputStreamReader
 class MainActivity : AppCompatActivity() {
     //TODO: PNを画面から指定できるようにする
     //TODO: モード選択を画面からできるようにする
+    //TODO: プログレスバーを追加する
+    //TODO: 入力単語数を画面から増減できるようにする
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,9 +65,12 @@ class MainActivity : AppCompatActivity() {
             // 順位をセット
             tableRow.getVirtualChildAt(0).rowtext1.text = "${i + 1}位"
             tableRow.getVirtualChildAt(0).rowtext1.height = 100
-            // 演算結果をセット
-            tableRow.getVirtualChildAt(1).rowtext2.text = "${ans}"
+            // 類似単語をセット
+            tableRow.getVirtualChildAt(1).rowtext2.text = "${ans.key}"
             tableRow.getVirtualChildAt(1).rowtext2.height = 100
+            // スコアをセット
+            tableRow.getVirtualChildAt(2).rowtext3.text = "${ans.value}"
+            tableRow.getVirtualChildAt(2).rowtext3.height = 100
             i = i.plus(1)
             println("${i}位：${ans}")
             tableLayout.addView(tableRow)
