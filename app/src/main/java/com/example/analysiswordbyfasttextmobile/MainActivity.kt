@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TableLayout
 import android.widget.TableRow
+import android.widget.ToggleButton
 import kotlinx.android.synthetic.main.table_row.view.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -38,10 +39,13 @@ class MainActivity : AppCompatActivity() {
             val inputText2 = findViewById<View>(R.id.inputText2) as EditText
             Log.d("input_text", "${inputText1.text}")
             Log.d("input_text", "${inputText2.text}")
-            // 入力する単語情報をセット
+            // 入力する単語・PNをセット
             val inputWord = linkedMapOf<String, String>()
-            inputWord.put("${inputText1.text}", "Negative")
-            inputWord.put("${inputText2.text}", "Positive")
+            val toggle1 = findViewById<View>(R.id.toggleButton) as ToggleButton
+            val toggle2 = findViewById<View>(R.id.toggleButton2) as ToggleButton
+            inputWord.put("${inputText1.text}", "${toggle1.text}")
+            inputWord.put("${inputText2.text}", "${toggle2.text}")
+
             // 素性ベクトルファイルの読み込み
             val searchBr = BufferedReader(InputStreamReader(assets.open(Setting.model)))
             val cosBr = BufferedReader(InputStreamReader(assets.open(Setting.model)))
