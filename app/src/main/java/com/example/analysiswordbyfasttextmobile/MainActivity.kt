@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         val radio1 = RadioButton(this)
         radio1.text = "高速モード"
         radio1.id = 0
+        radio1.isChecked = true
         val radio2 = RadioButton(this)
         radio2.text = "高性能モード(現在使用不可)"
         radio2.id = -1
