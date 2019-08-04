@@ -4,16 +4,13 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.EditText
-import android.widget.TableLayout
-import android.widget.TableRow
-import android.widget.ToggleButton
+import android.widget.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.table_row.view.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
 class MainActivity : AppCompatActivity() {
-    //TODO: PNを画面から指定できるようにする
     //TODO: モード選択を画面からできるようにする
     //TODO: プログレスバーを追加する
     //TODO: 入力単語数を画面から増減できるようにする
@@ -22,19 +19,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val cal = Calculator()
-        // 高性能モード・高速モードを選択し、それに応じたパラメータを設定
-//    Setting.mode = "HIGH_PERFORMANCE"
-        Setting.mode = "HIGH_SPEED"
-        if (Setting.mode == "HIGH_PERFORMANCE") {
-            Setting.model = "data/corpas/model_201907.vec"
-            Setting.vectorSize = 300
-        } else if (Setting.mode == "HIGH_SPEED") {
-            Setting.model = "model_abstract_201907.vec"
-            Setting.vectorSize = 200
-        }
+
 
         val executeButton = findViewById<View>(R.id.executeButton)
         executeButton.setOnClickListener {
+            // 高性能モード・高速モードを選択し、それに応じたパラメータを設定
+            val checkedId = radioGroup.getCheckedRadioButtonId()
+            if(checkedId == 2131232480) {
+                Setting.mode = "HIGH_SPEED"
+            } else if(checkedId == 2131232481) {
+                // ファイルが大きすぎるため、現状読み込めない。対策が必要。
+                Setting.mode = "HIGH_PERFORMANCE"
+            }
+            if (Setting.mode == "HIGH_PERFORMANCE") {
+                Setting.model = "model_201907.vec"
+                Setting.vectorSize = 300
+            } else if (Setting.mode == "HIGH_SPEED") {
+                Setting.model = "model_abstract_201907.vec"
+                Setting.vectorSize = 200
+            }
+
             val inputText1 = findViewById<View>(R.id.inputText1) as EditText
             val inputText2 = findViewById<View>(R.id.inputText2) as EditText
             Log.d("input_text", "${inputText1.text}")
