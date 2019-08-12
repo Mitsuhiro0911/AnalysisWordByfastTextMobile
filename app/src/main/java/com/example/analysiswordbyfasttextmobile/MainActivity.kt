@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             progressDialog.invalidateOptionsMenu()
 
             // プログレスダイアログの表示と別スレッドで内部処理を行う
-            GlobalScope.async {
+            GlobalScope.launch {
                 // 高性能モード・高速モードを選択し、それに応じたパラメータを設定
                 val checkedId = radioGroup.getCheckedRadioButtonId()
                 Log.d("check", "${checkedId}")
@@ -94,6 +94,7 @@ class MainActivity : AppCompatActivity() {
                 progressDialog.dismiss()
                 // UIへの操作を行う処理のため、メインスレッドに投げる
                 runOnUiThread {
+                    // コサイン類似度の上位10位まで出力
                     sortCosRank(cosRank)
                 }
             }
