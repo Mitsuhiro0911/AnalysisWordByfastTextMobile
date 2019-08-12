@@ -93,16 +93,9 @@ class MainActivity : AppCompatActivity() {
                 // プログレスダイアログを非表示にする
                 progressDialog.dismiss()
                 // UIへの操作を行う処理のため、メインスレッドに投げる
-                Thread(object : Runnable {
-                    override fun run() {
-                        mHandler!!.post(object : Runnable {
-                            override fun run() {
-                                // コサイン類似度の上位10位まで出力
-                                sortCosRank(cosRank)
-                            }
-                        })
-                    }
-                }).start()
+                runOnUiThread {
+                    sortCosRank(cosRank)
+                }
             }
         }
     }
