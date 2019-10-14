@@ -1,6 +1,6 @@
 # AnalysisWordByfastTextMobile
 ## アプリケーション概要
-fastTextを用いてWikipedia記事を学習し、単語の演算を実現しました。
+fastTextを用いてWikipedia記事を学習し、単語の演算を実現しました。(UIは改善予定)
 
 ## 使用技術一覧
 ・Kotlin(Android)
